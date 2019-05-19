@@ -3,6 +3,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.utils.safestring import mark_safe
 from django.conf import settings
 
+from bilderfee.bilderfee import Ext
 from bilderfee.bilderfee import url
 
 LAZY_LOADING = getattr(settings, 'BILDERFEE_LAZY_LOADING', False)
@@ -82,17 +83,24 @@ def bf_picture(img, dim, lazy=None, **kwargs):
     img_attrs, src_kwargs = get_img_src_args(kwargs)
 
     src = bf_src(img, dim, **src_kwargs)
+    src_2x = bf_src(img, dim, dpr=2, **src_kwargs)
+    src_webp = bf_src(img, dim, ext=Ext.WEBP, **src_kwargs)
+    src_webp_2x = bf_src(img, dim, ext=Ext.WEBP, dpr=2, **src_kwargs)
+
     cls = '{}{}'.format(img_attrs.get('class', ''), ' bf-lazy')
     data_prefix = 'data-' if lazy else ''
 
     html = (
         '<picture>'
-        '<source type="image/webp" {data_prefix}srcset="{src}@webp 1x, {src}@2x.webp 2x">'
-        '<img class="{cls}" {attrs} {data_prefix}src="{src}" {data_prefix}srcset="{src} 1x, {src}@2x 2x">'
+        '<source type="image/webp" {data_prefix}srcset="{src_webp} 1x, {src_webp_2x} 2x">'
+        '<img class="{cls}" {attrs} {data_prefix}src="{src}" {data_prefix}srcset="{src} 1x, {src_2x} 2x">'
         '</picture>'
     ).format(
         attrs=' '.join('{}="{}"'.format(k, v) for k, v in img_attrs.items()),
         src=src,
+        src_2x=src_2x,
+        src_webp=src_webp,
+        src_webp_2x=src_webp_2x,
         cls=cls,
         data_prefix=data_prefix
     )

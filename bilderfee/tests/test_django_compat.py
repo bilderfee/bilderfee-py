@@ -3,6 +3,7 @@ import pytest
 from django.template import Template
 from django.template import Context
 
+from bilderfee.bilderfee import Ext
 from bilderfee.django_compat.context_processors import bilderfee_ctx
 
 
@@ -86,20 +87,20 @@ def test_django_image_tag_rendering(mocker, tpl_tag, exp_url):
 @pytest.mark.parametrize('tpl_tag, exp_tag', [
     ('{% bf_picture "/IMG" "400x500" id="ID" alt="ALT" %}',
      ('<picture>'
-      '<source type="image/webp" srcset="I@webp 1x, I@2x.webp 2x">'
-      '<img class=" bf-lazy" id="ID" alt="ALT" src="I" srcset="I 1x, I@2x 2x">'
+      '<source type="image/webp" srcset="IW 1x, IW2 2x">'
+      '<img class=" bf-lazy" id="ID" alt="ALT" src="I" srcset="I 1x, I2 2x">'
       '</picture>')),
 
     # Lazy loading
     ('{% bf_picture "/IMG" "400x500" id="ID" alt="ALT" lazy=True %}',
      ('<picture>'
-      '<source type="image/webp" data-srcset="I@webp 1x, I@2x.webp 2x">'
-      '<img class=" bf-lazy" id="ID" alt="ALT" data-src="I" data-srcset="I 1x, I@2x 2x">'
+      '<source type="image/webp" data-srcset="IW 1x, IW2 2x">'
+      '<img class=" bf-lazy" id="ID" alt="ALT" data-src="I" data-srcset="I 1x, I2 2x">'
       '</picture>')),
 ])
 def test_django_picture_tag_rendering(mocker, tpl_tag, exp_tag):
     m_img_src = mocker.patch('bilderfee.django_compat.templatetags.bilderfee.bf_src')
-    m_img_src.return_value = 'I'
+    m_img_src.side_effect = ['I', 'I2', 'IW', 'IW2']
 
     ctx = Context(bilderfee_ctx(None))
     url = Template(
@@ -107,7 +108,12 @@ def test_django_picture_tag_rendering(mocker, tpl_tag, exp_tag):
         tpl_tag
     ).render(context=ctx)
 
-    m_img_src.assert_called_once_with('/IMG', '400x500')
+    assert m_img_src.call_args_list == [
+        mocker.call('/IMG', '400x500'),
+        mocker.call('/IMG', '400x500', dpr=2),
+        mocker.call('/IMG', '400x500', ext=Ext.WEBP),
+        mocker.call('/IMG', '400x500', dpr=2, ext=Ext.WEBP)
+    ]
 
     assert url == exp_tag
 
