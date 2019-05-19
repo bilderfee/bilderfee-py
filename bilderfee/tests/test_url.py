@@ -20,10 +20,10 @@ from bilderfee.bilderfee import url
     ({'width': 800, 'height': 400, 'gravity': Gravity.WEST}, 'T/width:800,height:400,gravity:we/IMG-URL'),
     # DPR
     ({'width': 800, 'height': 400, 'dpr': None}, 'T/width:800,height:400/IMG-URL'),
-    ({'width': 800, 'height': 400, 'dpr': 0}, 'T/width:800,height:400,dpr:0.5/IMG-URL'),
-    ({'width': 800, 'height': 400, 'dpr': 0.5}, 'T/width:800,height:400,dpr:0.5/IMG-URL'),
-    ({'width': 800, 'height': 400, 'dpr': 1}, 'T/width:800,height:400,dpr:1/IMG-URL'),
-    ({'width': 800, 'height': 400, 'dpr': 2}, 'T/width:800,height:400,dpr:2/IMG-URL'),
+    ({'width': 800, 'height': 400, 'dpr': 0}, 'T/width:800,height:400/IMG-URL'),
+    ({'width': 800, 'height': 400, 'dpr': 1}, 'T/width:800,height:400/IMG-URL'),
+    ({'width': 800, 'height': 400, 'dpr': 1.5}, 'T/width:800,height:400/IMG-URL@1.5x.jpg'),
+    ({'width': 800, 'height': 400, 'dpr': 2}, 'T/width:800,height:400/IMG-URL@2x.jpg'),
     # Quality
     ({'width': 800, 'height': 400, 'quality': None}, 'T/width:800,height:400/IMG-URL'),
     ({'width': 800, 'height': 400, 'quality': ''}, 'T/width:800,height:400/IMG-URL'),
@@ -44,12 +44,12 @@ from bilderfee.bilderfee import url
     ({'width': 800, 'height': 400, 'sharpen': -1}, 'T/width:800,height:400,sharpen:1/IMG-URL'),
     ({'width': 800, 'height': 400, 'sharpen': 2}, 'T/width:800,height:400,sharpen:2/IMG-URL'),
     # File Extension
-    ({'width': 800, 'height': 400, 'ext': Ext.GIF}, 'T/width:800,height:400,ext:gif/IMG-URL'),
-    ({'width': 800, 'height': 400, 'ext': Ext.ICO}, 'T/width:800,height:400,ext:ico/IMG-URL'),
-    ({'width': 800, 'height': 400, 'ext': Ext.JPEG}, 'T/width:800,height:400,ext:jpg/IMG-URL'),
-    ({'width': 800, 'height': 400, 'ext': Ext.PNG}, 'T/width:800,height:400,ext:png/IMG-URL'),
-    ({'width': 800, 'height': 400, 'ext': Ext.WEBP}, 'T/width:800,height:400,ext:webp/IMG-URL'),
-    ({'width': 800, 'height': 400, 'ext': 'png'}, 'T/width:800,height:400,ext:png/IMG-URL'),
+    ({'width': 800, 'height': 400, 'format': Ext.GIF}, 'T/width:800,height:400,format:gif/IMG-URL'),
+    ({'width': 800, 'height': 400, 'format': Ext.ICO}, 'T/width:800,height:400,format:ico/IMG-URL'),
+    ({'width': 800, 'height': 400, 'format': Ext.JPEG}, 'T/width:800,height:400,format:jpg/IMG-URL'),
+    ({'width': 800, 'height': 400, 'format': Ext.PNG}, 'T/width:800,height:400,format:png/IMG-URL'),
+    ({'width': 800, 'height': 400, 'format': Ext.WEBP}, 'T/width:800,height:400,format:webp/IMG-URL'),
+    ({'width': 800, 'height': 400, 'format': 'png'}, 'T/width:800,height:400,format:png/IMG-URL'),
     # Max Size
     ({'width': 3000, 'height': 6000}, 'T/width:1250,height:2500/IMG-URL'),
     ({'width': 2500, 'height': 1500}, 'T/width:2500,height:1500/IMG-URL'),
@@ -58,8 +58,8 @@ from bilderfee.bilderfee import url
     ({'width': 1500, 'height': 2501}, 'T/width:1499,height:2500/IMG-URL'),
     ({'width': 2501, 'height': 2501}, 'T/width:2500,height:2500/IMG-URL'),
     #  Repects DPR
-    ({'width': 2000, 'height': 1000, 'dpr': 2}, 'T/width:1250,height:625,dpr:2/IMG-URL'),
-    ({'width': 1000, 'height': 2000, 'dpr': 2}, 'T/width:625,height:1250,dpr:2/IMG-URL'),
+    ({'width': 2000, 'height': 1000, 'dpr': 2}, 'T/width:1250,height:625/IMG-URL@2x.jpg'),
+    ({'width': 1000, 'height': 2000, 'dpr': 2}, 'T/width:625,height:1250/IMG-URL@2x.jpg'),
 
 ])
 def test_url(params, exp_url):

@@ -17,8 +17,8 @@ from bilderfee.django_compat.context_processors import bilderfee_ctx
     ('{% bf_src "/IMG" "400x500" gravity=BF_GRAVITY_WEST %}', 'width:400,height:500,gravity:we/IMG'),
     ('{% bf_src "/IMG" "400x500" gravity=BF_GRAVITY_CENTER %}', 'width:400,height:500,gravity:ce/IMG'),
     # DPR
-    ('{% bf_src "/IMG" "400x500" dpr=2 %}', 'width:400,height:500,dpr:2/IMG'),
-    ('{% bf_src "/IMG" "400x500" dpr=1.5 %}', 'width:400,height:500,dpr:1.5/IMG'),
+    ('{% bf_src "/IMG" "400x500" dpr=2 %}', 'width:400,height:500/IMG@2x.jpg'),
+    ('{% bf_src "/IMG" "400x500" dpr=1.5 %}', 'width:400,height:500/IMG@1.5x.jpg'),
     # Quality
     ('{% bf_src "/IMG" "400x500" quality=0 %}', 'width:400,height:500,quality:50/IMG'),
     ('{% bf_src "/IMG" "400x500" quality=80 %}', 'width:400,height:500,quality:80/IMG'),
@@ -31,11 +31,11 @@ from bilderfee.django_compat.context_processors import bilderfee_ctx
     ('{% bf_src "/IMG" "400x500" sharpen=0 %}', 'width:400,height:500,sharpen:1/IMG'),
     ('{% bf_src "/IMG" "400x500" sharpen=2 %}', 'width:400,height:500,sharpen:2/IMG'),
     #  File extension
-    ('{% bf_src "/IMG" "400x500" ext=BF_EXT_JPEG %}', 'width:400,height:500,ext:jpg/IMG'),
-    ('{% bf_src "/IMG" "400x500" ext=BF_EXT_PNG %}', 'width:400,height:500,ext:png/IMG'),
-    ('{% bf_src "/IMG" "400x500" ext=BF_EXT_GIF %}', 'width:400,height:500,ext:gif/IMG'),
-    ('{% bf_src "/IMG" "400x500" ext=BF_EXT_WEBP %}', 'width:400,height:500,ext:webp/IMG'),
-    ('{% bf_src "/IMG" "400x500" ext=BF_EXT_ICO %}', 'width:400,height:500,ext:ico/IMG'),
+    ('{% bf_src "/IMG" "400x500" format=BF_EXT_JPEG %}', 'width:400,height:500,format:jpg/IMG'),
+    ('{% bf_src "/IMG" "400x500" format=BF_EXT_PNG %}', 'width:400,height:500,format:png/IMG'),
+    ('{% bf_src "/IMG" "400x500" format=BF_EXT_GIF %}', 'width:400,height:500,format:gif/IMG'),
+    ('{% bf_src "/IMG" "400x500" format=BF_EXT_WEBP %}', 'width:400,height:500,format:webp/IMG'),
+    ('{% bf_src "/IMG" "400x500" format=BF_EXT_ICO %}', 'width:400,height:500,format:ico/IMG'),
 ])
 def test_django_img_src(tpl_tag, exp_url):
     ctx = Context(bilderfee_ctx(None))
@@ -114,7 +114,7 @@ def test_django_picture_tag_rendering(mocker, tpl_tag, exp_tag):
         mocker.call('/IMG', '400x500', ext=Ext.WEBP),
         mocker.call('/IMG', '400x500', dpr=2, ext=Ext.WEBP)
     ]
-
+    
     assert url == exp_tag
 
 

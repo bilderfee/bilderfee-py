@@ -37,7 +37,7 @@ ALLOWED_OPTIONS = {
     "sharpen": lambda x: to_nr_range(x, mn=1, mx=100),
     "blur": lambda x: to_nr_range(x, mn=1, mx=100),
     "negate": lambda x: bool_2_int(x),
-    "dpr": lambda x: to_nr_range(x, mn=0.5, mx=5),
+    "dpr": lambda x: to_nr_range(x, mn=1, mx=3),
     "fit": lambda x: bool_2_int(x),
     "quality": lambda x: to_nr_range(x, mn=50, mx=100),
     "gravity": lambda x: trans_enum(x),
@@ -56,7 +56,6 @@ ALLOWED_OPTIONS = {
     "sh": lambda x: bool_2_int(x),
     "q": lambda x: to_nr_range(x, mn=50, mx=100),
     "g": lambda x: trans_enum(x),
-    "ext": lambda x: trans_enum(x),
     "fmt": lambda x: trans_enum(x),
     "bg": lambda x: trans_color(x),
     "gray": lambda x: bool_2_int(x),
@@ -84,9 +83,12 @@ class Ext(Enum):
 def url(url, **kwargs):
     max_size = kwargs.get('max_size', MAX_SIZE)
     width, height = kwargs['width'], kwargs['height']
+    dpr = kwargs.pop('dpr', 1)
+    override = ''
 
-    if kwargs.get('dpr') and kwargs['dpr'] > 1:
-        max_size = max_size / kwargs['dpr']
+    if dpr and dpr > 1:
+        max_size = max_size / dpr
+        override = '@{}x.{}'.format(dpr, kwargs.get('format', Ext.JPEG.value))
 
     if width > max_size or height > max_size:
         mx = max(width, height)
@@ -102,9 +104,10 @@ def url(url, **kwargs):
         if k in ALLOWED_OPTIONS and ALLOWED_OPTIONS[k](v) is not None
     )
 
-    return '{base_url}/{token}/{options}/{url}'.format(
+    return '{base_url}/{token}/{options}/{url}{override}'.format(
         base_url=kwargs.get('base_url', BASE_URL),
         token=kwargs.get('token', TOKEN),
         options=options,
-        url=url[1:] if url[0] == '/' else url
+        url=url[1:] if url[0] == '/' else url,
+        override=override
     )
