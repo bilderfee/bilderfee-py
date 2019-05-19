@@ -49,6 +49,18 @@ from bilderfee.bilderfee import url
     ({'width': 800, 'height': 400, 'ext': Ext.JPEG}, 'T/width:800,height:400,ext:jpg/IMG-URL'),
     ({'width': 800, 'height': 400, 'ext': Ext.PNG}, 'T/width:800,height:400,ext:png/IMG-URL'),
     ({'width': 800, 'height': 400, 'ext': Ext.WEBP}, 'T/width:800,height:400,ext:webp/IMG-URL'),
+    ({'width': 800, 'height': 400, 'ext': 'png'}, 'T/width:800,height:400,ext:png/IMG-URL'),
+    # Max Size
+    ({'width': 3000, 'height': 6000}, 'T/width:1250,height:2500/IMG-URL'),
+    ({'width': 2500, 'height': 1500}, 'T/width:2500,height:1500/IMG-URL'),
+    ({'width': 1500, 'height': 2500}, 'T/width:1500,height:2500/IMG-URL'),
+    ({'width': 2501, 'height': 1500}, 'T/width:2500,height:1499/IMG-URL'),
+    ({'width': 1500, 'height': 2501}, 'T/width:1499,height:2500/IMG-URL'),
+    ({'width': 2501, 'height': 2501}, 'T/width:2500,height:2500/IMG-URL'),
+    #  Repects DPR
+    ({'width': 2000, 'height': 1000, 'dpr': 2}, 'T/width:1250,height:625,dpr:2/IMG-URL'),
+    ({'width': 1000, 'height': 2000, 'dpr': 2}, 'T/width:625,height:1250,dpr:2/IMG-URL'),
+
 ])
 def test_url(params, exp_url):
     res = url('IMG-URL', **params)

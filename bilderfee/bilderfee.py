@@ -5,6 +5,7 @@ from enum import Enum
 BASE_URL = 'https://f1.bilder-fee.de'
 TOKEN = 'T'
 RE_COLOR = re.compile('([0-9a-f]{3})|([0-9-a-f]{6})')
+MAX_SIZE = 2500
 
 
 def to_nr_range(x, mn=0, mx=365):
@@ -16,7 +17,10 @@ def bool_2_int(x):
 
 
 def trans_enum(x):
-    return x.value if isinstance(x, Enum) else None
+    if isinstance(x, Enum):
+        return x.value if isinstance(x, Enum) else None
+    else:
+        return x
 
 
 def trans_color(x):
@@ -78,6 +82,20 @@ class Ext(Enum):
 
 
 def url(url, **kwargs):
+    max_size = kwargs.get('max_size', MAX_SIZE)
+    width, height = kwargs['width'], kwargs['height']
+
+    if kwargs.get('dpr') and kwargs['dpr'] > 1:
+        max_size = max_size / kwargs['dpr']
+
+    if width > max_size or height > max_size:
+        mx = max(width, height)
+        ratio = max_size / mx
+        width = width * ratio
+        height = height * ratio
+
+        kwargs.update(width=int(width), height=int(height))
+
     options = ','.join(
         '{}:{}'.format(k, ALLOWED_OPTIONS[k](v))
         for k, v in kwargs.items()
