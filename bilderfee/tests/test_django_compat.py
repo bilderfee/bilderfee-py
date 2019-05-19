@@ -114,7 +114,7 @@ def test_django_picture_tag_rendering(mocker, tpl_tag, exp_tag):
         mocker.call('/IMG', '400x500', ext=Ext.WEBP),
         mocker.call('/IMG', '400x500', dpr=2, ext=Ext.WEBP)
     ]
-    
+
     assert url == exp_tag
 
 
