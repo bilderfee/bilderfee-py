@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='bilderfee',
@@ -13,6 +10,8 @@ setup(
     url='https://developer.bilder-fee.de/',
     author='Bilderfee',
     author_email='hello@bilderfee.de',
+    platforms=['OS Independent'],
+    include_package_data=True,
     packages=find_packages(),
     tests_require=[
         'enum34',
@@ -34,5 +33,10 @@ setup(
         'Topic :: Internet',
         'Topic :: Multimedia :: Image',
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
 )

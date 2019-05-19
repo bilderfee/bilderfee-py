@@ -2,5 +2,6 @@ include AUTHORS
 include LICENSE
 include README.rst
 include CHANGELOG.txt
-recursive-include django_compat/static *
+recursive-include bilderfee/django_compat *
 recursive-exclude * *.pyc
+recursive-exclude __pycache__
