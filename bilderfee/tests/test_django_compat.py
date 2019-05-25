@@ -1,10 +1,19 @@
 import pytest
 
+from django.db.models.fields.files import ImageFieldFile, FieldFile
 from django.template import Template
 from django.template import Context
 
 from bilderfee.bilderfee import Ext
 from bilderfee.django_compat.context_processors import bilderfee_ctx
+
+
+# file_mock = mock.MagicMock(spec=File, name='FileMock')
+# file_mock.name = 'test1.jpg'
+#
+# storage_mock = mock.MagicMock(spec=Storage, name='StorageMock')
+# storage_mock.url = mock.MagicMock(name='url')
+# storage_mock.url.return_value = '/tmp/test1.jpg'
 
 
 @pytest.mark.parametrize('tpl_tag, exp_url', [
@@ -46,6 +55,25 @@ def test_django_img_src(tpl_tag, exp_url):
 
     exp_url_full = 'https://f1.bilder-fee.de/BF_TOKEN/{0}'.format(exp_url)
     assert url == exp_url_full
+
+
+@pytest.mark.parametrize('tag, exp_url', [
+    ('{% bf_src "/IMG" "400x500" %}', 'https://f1.bilder-fee.de/BF_TOKEN/width:400,height:500/IMG'),
+    ('{% bf_src img "400x500" %}', 'https://f1.bilder-fee.de/BF_TOKEN/width:400,height:500/IMG'),
+    ('{% bf_src None "400x500" %}', ''),
+])
+def test_django_img_src_with_imagefield(mocker, tag, exp_url):
+    # tpl_tag = '{% bf_src img "400x500" %}'
+
+    ctx = Context(bilderfee_ctx(None))
+    ctx['img'] = mocker.NonCallableMock(spec=FieldFile, url='IMG')
+
+    url = Template(
+        '{% load bilderfee %}' +
+        tag
+    ).render(context=ctx)
+
+    assert url == exp_url
 
 
 def test_django_image_tag_calls_url(mocker):

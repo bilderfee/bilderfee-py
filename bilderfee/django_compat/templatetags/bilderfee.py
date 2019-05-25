@@ -1,7 +1,9 @@
 from django import template
 from django.core.exceptions import ImproperlyConfigured
+from django.core.files import File
 from django.utils.safestring import mark_safe
 from django.conf import settings
+from django.db.models.fields.files import ImageFieldFile
 
 from bilderfee.bilderfee import Ext
 from bilderfee.bilderfee import url
@@ -38,14 +40,17 @@ def bf_src(img, dim, **kwargs):
     if settings.DEBUG is False and not hasattr(settings, 'BILDERFEE_TOKEN'):
         raise ImproperlyConfigured('Please configure BILDERFEE_TOKEN in your settings.')
 
-    data = {
-        'width': int(width),
-        'height': int(height),
-        'token': settings.BILDERFEE_TOKEN
-    }
-    data.update(**kwargs)
+    if img:
+        data = {
+            'width': int(width),
+            'height': int(height),
+            'token': settings.BILDERFEE_TOKEN
+        }
+        data.update(**kwargs)
 
-    return url(img, **data)
+        return url(img.url if hasattr(img, 'url') else img, **data)
+
+    return ''
 
 
 def get_img_src_args(kwargs):
