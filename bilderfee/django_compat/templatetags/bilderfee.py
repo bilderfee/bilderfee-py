@@ -40,7 +40,7 @@ def bf_src(img, dim, **kwargs):
     if settings.DEBUG is False and not hasattr(settings, 'BILDERFEE_TOKEN'):
         raise ImproperlyConfigured('Please configure BILDERFEE_TOKEN in your settings.')
 
-    if img or hasattr(settings, 'BILDERFEE_FALLBACK'):
+    if bool(img) or hasattr(settings, 'BILDERFEE_FALLBACK'):
         data = {
             'width': int(width),
             'height': int(height),
