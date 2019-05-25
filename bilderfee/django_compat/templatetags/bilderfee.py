@@ -40,7 +40,7 @@ def bf_src(img, dim, **kwargs):
     if settings.DEBUG is False and not hasattr(settings, 'BILDERFEE_TOKEN'):
         raise ImproperlyConfigured('Please configure BILDERFEE_TOKEN in your settings.')
 
-    if img:
+    if img or hasattr(settings, 'BILDERFEE_FALLBACK'):
         data = {
             'width': int(width),
             'height': int(height),
@@ -48,7 +48,9 @@ def bf_src(img, dim, **kwargs):
         }
         data.update(**kwargs)
 
-        return url(img.url if hasattr(img, 'url') else img, **data)
+        img_url = img.url if hasattr(img, 'url') else img
+
+        return url(img_url if img_url else settings.BILDERFEE_FALLBACK, **data)
 
     return ''
 

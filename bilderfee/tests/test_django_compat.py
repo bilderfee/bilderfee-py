@@ -60,11 +60,9 @@ def test_django_img_src(tpl_tag, exp_url):
 @pytest.mark.parametrize('tag, exp_url', [
     ('{% bf_src "/IMG" "400x500" %}', 'https://f1.bilder-fee.de/BF_TOKEN/width:400,height:500/IMG'),
     ('{% bf_src img "400x500" %}', 'https://f1.bilder-fee.de/BF_TOKEN/width:400,height:500/IMG'),
-    ('{% bf_src None "400x500" %}', ''),
+    ('{% bf_src None "400x500" %}', 'https://f1.bilder-fee.de/BF_TOKEN/width:400,height:500/fallback.jpg'),
 ])
 def test_django_img_src_with_imagefield(mocker, tag, exp_url):
-    # tpl_tag = '{% bf_src img "400x500" %}'
-
     ctx = Context(bilderfee_ctx(None))
     ctx['img'] = mocker.NonCallableMock(spec=FieldFile, url='IMG')
 

@@ -25,6 +25,11 @@ Change lazy-loading behaviour
 BILDERFEE_LAZY_LOADING = True
 ```
 
+Change default behaviour when there is no image
+```python
+BILDERFEE_FALLBACK = '/media/my-default-image.jpg'
+```
+
 Register TEMPLATE TAGS
 
 ```python
