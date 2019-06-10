@@ -91,8 +91,8 @@ def bf_picture(img, dim, lazy=None, **kwargs):
 
     src = bf_src(img, dim, **src_kwargs)
     src_2x = bf_src(img, dim, dpr=2, **src_kwargs)
-    src_webp = bf_src(img, dim, ext=Ext.WEBP, **src_kwargs)
-    src_webp_2x = bf_src(img, dim, ext=Ext.WEBP, dpr=2, **src_kwargs)
+    src_webp = bf_src(img, dim, format=Ext.WEBP, **src_kwargs)
+    src_webp_2x = bf_src(img, dim, format=Ext.WEBP, dpr=2, **src_kwargs)
 
     cls = '{}{}'.format(img_attrs.get('class', ''), ' bf-lazy')
     data_prefix = 'data-' if lazy else ''
