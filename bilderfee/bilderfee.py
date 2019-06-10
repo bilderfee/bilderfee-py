@@ -88,7 +88,7 @@ def url(url, **kwargs):
 
     if dpr and dpr > 1:
         max_size = max_size / dpr
-        override = '@{}x.{}'.format(dpr, kwargs.get('format', Ext.JPEG.value))
+        override = '@{}x.{}'.format(dpr, kwargs.get('format', Ext.JPEG).value)
 
     if width > max_size or height > max_size:
         mx = max(width, height)
