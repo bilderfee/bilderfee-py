@@ -1,9 +1,7 @@
 from django import template
 from django.core.exceptions import ImproperlyConfigured
-from django.core.files import File
 from django.utils.safestring import mark_safe
 from django.conf import settings
-from django.db.models.fields.files import ImageFieldFile
 
 from bilderfee.bilderfee import Ext
 from bilderfee.bilderfee import url
@@ -48,7 +46,7 @@ def bf_src(img, dim, **kwargs):
         }
         data.update(**kwargs)
 
-        img_url = img.url if bool(img) and img.url else img
+        img_url = img.url if bool(img) and hasattr(img, 'url') and img.url else img
 
         return url(img_url if img_url else settings.BILDERFEE_FALLBACK, **data)
 
