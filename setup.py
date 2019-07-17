@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bilderfee',
-    version='0.1.0',
+    version='0.2.0',
     description='Django/Jinja2 Templatetags Bilderfee.',
     url='https://developer.bilder-fee.de/',
     author='Bilderfee',

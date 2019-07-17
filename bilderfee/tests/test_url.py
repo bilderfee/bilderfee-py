@@ -63,8 +63,9 @@ from bilderfee.bilderfee import url
 
 ])
 def test_url(params, exp_url):
+    params.update(base_url='https://my.bilder-fee.de')
     res = url('IMG-URL', **params)
 
-    exp_url_full = 'https://f1.bilder-fee.de/{0}'.format(exp_url)
+    exp_url_full = 'https://my.bilder-fee.de/{0}'.format(exp_url)
     assert res == exp_url_full
 

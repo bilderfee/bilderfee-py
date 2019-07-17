@@ -4,6 +4,7 @@ BILDERFEE_TOKEN = 'BF_TOKEN'
 BILDERFEE_LAZY_LOADING = False
 BILDERFEE_MAX_SIZE = 2500
 BILDERFEE_FALLBACK = '/fallback.jpg'
+BILDERFEE_BASE_URL = 'https://my.bilder-fee.de'
 
 STATIC_URL = 'http://my-hp.de'
 

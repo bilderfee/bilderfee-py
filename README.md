@@ -15,9 +15,11 @@ INSTALLED_APPS = [
 ]
 ```
 
-Add your TOKEN
+Add your TOKEN AND BASE_URL
 ```python
 BILDERFEE_TOKEN = 'YOUR_BF_TOKEN'
+BILDERFERR_BASE_URL = 'YOU_BF_URL'
+
 ```
 
 Change lazy-loading behaviour

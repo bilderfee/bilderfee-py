@@ -2,7 +2,7 @@ import re
 
 from enum import Enum
 
-BASE_URL = 'https://f1.bilder-fee.de'
+BASE_URL = None
 TOKEN = 'T'
 RE_COLOR = re.compile('([0-9a-f]{3})|([0-9-a-f]{6})')
 MAX_SIZE = 2500

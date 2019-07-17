@@ -5,8 +5,13 @@ from django.conf import settings
 
 from bilderfee.bilderfee import Ext
 from bilderfee.bilderfee import url
+from bilderfee.bilderfee import BASE_URL as BF_BASE_URL
 
 LAZY_LOADING = getattr(settings, 'BILDERFEE_LAZY_LOADING', False)
+BASE_URL = getattr(settings, 'BILDERFEE_BASE_URL', BF_BASE_URL)
+
+if BASE_URL is None:
+    raise ImproperlyConfigured('Please provide your BILDERFEE_BASE_URL')
 
 register = template.Library()
 
@@ -42,7 +47,8 @@ def bf_src(img, dim, **kwargs):
         data = {
             'width': int(width),
             'height': int(height),
-            'token': settings.BILDERFEE_TOKEN
+            'token': settings.BILDERFEE_TOKEN,
+            'base_url': BASE_URL
         }
         data.update(**kwargs)
 
